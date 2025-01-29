@@ -30,9 +30,10 @@ public class MemoController {
     // 전체 조회
     @GetMapping
     public List<MemoResponseDto> findAllMemos() {
-        
+
         return memoService.findAllMemos();
     }
+
     // 단건 조회
     @GetMapping("/{id}")
     public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id) {
@@ -55,6 +56,13 @@ public class MemoController {
         return new ResponseEntity<>(memoService.updateTitle(id, dto.getTitle(), dto.getContents()), HttpStatus.OK);
     }
 
+    // 단건 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMemo(@PathVariable Long id) {
+        memoService.deleteMemo(id);
 
-    
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+
 }
