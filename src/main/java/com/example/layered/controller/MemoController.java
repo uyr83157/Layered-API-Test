@@ -27,10 +27,27 @@ public class MemoController {
         return new ResponseEntity<>(memoService.saveMemo(dto), HttpStatus.CREATED);
     }
 
+    // 전체 조회
     @GetMapping
     public List<MemoResponseDto> findAllMemos() {
-
-
+        
         return memoService.findAllMemos();
     }
+    // 단건 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<MemoResponseDto> findMemoById(@PathVariable Long id) {
+
+        return new ResponseEntity<>(memoService.findMemoById(id), HttpStatus.OK);
+    }
+
+    // 단건 수정
+    @PutMapping("/{id}")
+    public ResponseEntity<MemoResponseDto> updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto dto) {
+
+
+        return new ResponseEntity<>(memoService.updateMemo(id, dto.getTitle(), dto.getContents()), HttpStatus.OK);
+    }
+
+
+    
 }

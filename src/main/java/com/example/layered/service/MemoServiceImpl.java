@@ -4,7 +4,9 @@ import com.example.layered.dto.MemoRequestDto;
 import com.example.layered.dto.MemoResponseDto;
 import com.example.layered.entity.Memo;
 import com.example.layered.repository.MemoRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -34,5 +36,35 @@ public class MemoServiceImpl implements MemoService {
     public List<MemoResponseDto> findAllMemos() {
 
         return memoRepository.findAllMemos();
+    }
+
+    @Override
+    public MemoResponseDto findMemoById(Long id) {
+
+        Memo memo = memoRepository.findMemoById(id);
+
+        if (memo == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+
+        return new MemoResponseDto(memo);
+    }
+
+    @Override
+    public MemoResponseDto updateMemo(Long id, String title, String contents) {
+
+        Memo memo = memoRepository.findMemoById(id);
+
+        if (memo == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Does not exist id = " + id);
+        }
+
+        if (title == null || contents == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Title and contents cannot be null");
+        }
+
+        memo.update(title, contents);
+
+        return new MemoResponseDto(memo);
     }
 }

@@ -10,4 +10,8 @@ public interface MemoService {
     MemoResponseDto saveMemo(MemoRequestDto memoRequestDto);
 
     List<MemoResponseDto> findAllMemos();
+
+    MemoResponseDto findMemoById(Long id);
+
+    MemoResponseDto updateMemo(Long id, String title, String contents);
 }
