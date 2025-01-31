@@ -8,8 +8,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class Memo {
-
-    @Setter // id만 Setter 적용
+    
     private Long id;
     private String title;
     private String contents;
